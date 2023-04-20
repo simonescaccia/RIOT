@@ -14,8 +14,8 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
-WIFI_SSID ?= "Your_WiFi_name"
-WIFI_PASS ?= "Your_secure_password"
+WIFI_SSID ?= "iPhone di Simone"
+WIFI_PASS ?= "pq1ow2ie3ur4yt5"
 
 # Optionally include remoteDNS support. This includes resolution of names at an
 # upstream DNS server and the handling of RDNSS options in Router Advertisements
@@ -40,8 +40,8 @@ USEMODULE += netdev_default
 USEPKG += paho-mqtt
 
 # paho-mqtt depends on TCP support, choose which stacks you want
-GNRC_IPV6 ?= 1
-LWIP_IPV4 ?= 0
+GNRC_IPV6 ?= 0
+LWIP_IPV4 ?= 1
 LWIP_IPV6 ?= 0
 
 include Makefile.lwip

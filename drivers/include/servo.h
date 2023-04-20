@@ -51,6 +51,11 @@
 #include "saul_reg.h"
 #include "time_units.h"
 
+/**
+ * @author      Simone Scaccia
+*/
+#define MODULE_SERVO_PWM 1
+
 #ifndef SERVO_TIMER_MAX_CHAN
 /**
  * @brief   In case the `servo_timer` backend is used to driver the servo,

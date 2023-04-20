@@ -102,7 +102,7 @@ extern "C" {
  *        at maximum PWM_CHANNEL_NUM_DEV_MAX.
  */
 #ifndef PWM0_GPIOS
-#define PWM0_GPIOS  { GPIO14, GPIO17, GPIO18, GPIO21 }
+#define PWM0_GPIOS  { GPIO19,GPIO20 }
 #endif
 
 /**
@@ -114,7 +114,7 @@ extern "C" {
  */
 #ifndef MODULE_ESP_RTC_TIMER_32K
 #ifndef PWM1_GPIOS
-#define PWM1_GPIOS  { GPIO15, GPIO16 }
+#define PWM1_GPIOS  { GPIO21}
 #endif
 #endif
 

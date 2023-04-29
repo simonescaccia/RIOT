@@ -35,6 +35,8 @@
 #include "ztimer.h"
 #endif
 
+#include "xtimer.h"
+
 #include "net/loramac.h"
 #include "semtech_loramac.h"
 
@@ -128,6 +130,9 @@ static void *sender(void *arg)
 
 int main(void)
 {
+
+    xtimer_sleep(3);
+
     puts("LoRaWAN Class A low-power application");
     puts("=====================================");
 
@@ -151,7 +156,7 @@ int main(void)
     semtech_loramac_set_appkey(&loramac, appkey);
 
     /* Use a fast datarate, e.g. BW125/SF7 in EU868 */
-    semtech_loramac_set_dr(&loramac, LORAMAC_DR_5);
+    semtech_loramac_set_dr(&loramac, LORAMAC_DR_0);
 
     /* Join the network if not already joined */
     if (!semtech_loramac_is_mac_joined(&loramac)) {

@@ -364,13 +364,14 @@ void _init_loramac(semtech_loramac_t *mac,
                    LoRaMacPrimitives_t * primitives, LoRaMacCallback_t *callbacks)
 {
     mutex_lock(&mac->lock);
-    DEBUG("[semtech-loramac] initializing loramac\n");
+    DEBUG("[semtech-loramac _init_loramac] initializing loramac\n");
     primitives->MacMcpsConfirm = mcps_confirm;
     primitives->MacMcpsIndication = mcps_indication;
     primitives->MacMlmeConfirm = mlme_confirm;
     primitives->MacMlmeIndication = mlme_indication;
     LoRaMacInitialization(&semtech_loramac_radio_events, primitives, callbacks,
                           LORAMAC_ACTIVE_REGION);
+    DEBUG("[semtech-loramac _init_loramac] LoRaMacInitialization done");
 #ifdef DISABLE_LORAMAC_DUTYCYCLE
     LoRaMacTestSetDutyCycleOn(false);
 #endif
@@ -409,7 +410,11 @@ static void _join_otaa(semtech_loramac_t *mac)
     mlmeReq.Req.Join.AppKey = mac->appkey;
     mlmeReq.Req.Join.Datarate = dr;
     mutex_unlock(&mac->lock);
+
     uint8_t ret = LoRaMacMlmeRequest(&mlmeReq);
+
+    DEBUG("[semtech-loramac] LoRaMacMlmeRequest done\n");
+
     switch(ret) {
         case LORAMAC_STATUS_OK:
             /* Let the MAC do his job */
@@ -589,6 +594,7 @@ static void _semtech_loramac_event_cb(netdev_t *dev, netdev_event_t event)
             DEBUG("[semtech-loramac] unexpected netdev event received: %d\n",
                   event);
     }
+    DEBUG("[_semtech_loramac_event_cb] end\n");
 }
 
 void *_semtech_loramac_event_loop(void *arg)
@@ -828,8 +834,17 @@ void *_semtech_loramac_event_loop(void *arg)
 
 int semtech_loramac_init(semtech_loramac_t *mac)
 {
-    loramac_netdev_ptr = mac->netdev;
+    DEBUG("[semtech_loramac_init]\n");
+    DEBUG("[semtech_loramac_init] netdev: %p\n", mac->netdev);
+    
+    netdev_t my_netdev;
+    mac->netdev = &my_netdev;
+
+    DEBUG("[semtech_loramac_init] netdev: %p\n", mac->netdev);
+
     mac->netdev->event_callback = _semtech_loramac_event_cb;
+
+    DEBUG("[semtech_loramac_init] _semtech_loramac_event_cb done\n");
 
     semtech_loramac_pid = thread_create(_semtech_loramac_stack,
                                         sizeof(_semtech_loramac_stack),
@@ -838,12 +853,16 @@ int semtech_loramac_init(semtech_loramac_t *mac)
                                         _semtech_loramac_event_loop, mac,
                                         "recv_thread");
 
+    DEBUG("[semtech_loramac_init] thread create done\n");
+
     if (semtech_loramac_pid <= KERNEL_PID_UNDEF) {
         DEBUG("Creation of receiver thread failed\n");
         return -1;
     }
 
     _init_loramac(mac, &semtech_loramac_primitives, &semtech_loramac_callbacks);
+
+    DEBUG("[semtech_loramac_init] loramac_init done\n");
 
     return 0;
 }

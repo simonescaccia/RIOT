@@ -34,7 +34,7 @@
 #include "irq.h"
 #include "cib.h"
 
-#define ENABLE_DEBUG 1
+#define ENABLE_DEBUG 0
 #include "debug.h"
 
 static int _msg_receive(msg_t *m, int block);
@@ -104,18 +104,18 @@ static int _msg_send(msg_t *m, kernel_pid_t target_pid, bool block,
 
     thread_t *me = thread_get_active();
 
-    DEBUG("msg_send() %s:%i: Sending from %" PRIkernel_pid " to %" PRIkernel_pid
+    DEBUG("[msg] msg_send() %s:%i: Sending from %" PRIkernel_pid " to %" PRIkernel_pid
           ". block=%i src->state=%i target->state=%i\n", __FILE__,
           __LINE__, thread_getpid(), target_pid,
           block, (int)me->status, (int)target->status);
 
     if (target->status != STATUS_RECEIVE_BLOCKED) {
         DEBUG(
-            "msg_send() %s:%i: Target %" PRIkernel_pid " is not RECEIVE_BLOCKED.\n",
+            "[msg] msg_send() %s:%i: Target %" PRIkernel_pid " is not RECEIVE_BLOCKED.\n",
             __FILE__, __LINE__, target_pid);
 
         if (queue_msg(target, m)) {
-            DEBUG("msg_send() %s:%i: Target %" PRIkernel_pid
+            DEBUG("[msg] msg_send() %s:%i: Target %" PRIkernel_pid
                   " has a msg_queue. Queueing message.\n", __FILE__,
                   __LINE__, target_pid);
             irq_restore(state);
@@ -129,13 +129,13 @@ static int _msg_send(msg_t *m, kernel_pid_t target_pid, bool block,
         }
 
         if (!block) {
-            DEBUG("msg_send: %" PRIkernel_pid ": Receiver not waiting, "
+            DEBUG("[msg] msg_send: %" PRIkernel_pid ": Receiver not waiting, "
                   "block=%d\n", me->pid, block);
             irq_restore(state);
             return 0;
         }
 
-        DEBUG("msg_send: %" PRIkernel_pid ": going send blocked.\n",
+        DEBUG("[msg] msg_send: %" PRIkernel_pid ": going send blocked.\n",
               me->pid);
 
         me->wait_data = m;
@@ -161,11 +161,11 @@ static int _msg_send(msg_t *m, kernel_pid_t target_pid, bool block,
         irq_restore(state);
         thread_yield_higher();
 
-        DEBUG("msg_send: %" PRIkernel_pid ": Back from send block.\n",
+        DEBUG("[msg] msg_send: %" PRIkernel_pid ": Back from send block.\n",
               me->pid);
     }
     else {
-        DEBUG("msg_send: %" PRIkernel_pid ": Direct msg copy from %"
+        DEBUG("[msg] msg_send: %" PRIkernel_pid ": Direct msg copy from %"
               PRIkernel_pid " to %" PRIkernel_pid ".\n",
               me->pid, thread_getpid(), target_pid);
         /* copy msg to target */

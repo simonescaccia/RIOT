@@ -17,4 +17,5 @@
         "editor.tabSize": 2,
         "editor.insertSpaces": true,
     },
+    "cmake.sourceDirectory": "/home/simone/Documents/RIOT/build/pkg/esp32_sdk/components/bootloader/subproject/main",
 }

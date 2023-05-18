@@ -156,7 +156,7 @@ int main(void)
     semtech_loramac_set_appkey(&loramac, appkey);
 
     /* Use a fast datarate, e.g. BW125/SF7 in EU868 */
-    semtech_loramac_set_dr(&loramac, LORAMAC_DR_0);
+    semtech_loramac_set_dr(&loramac, LORAMAC_DR_5);
 
     /* Join the network if not already joined */
     if (!semtech_loramac_is_mac_joined(&loramac)) {

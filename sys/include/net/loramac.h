@@ -28,6 +28,9 @@
 
 #include "modules.h"
 
+#define ENABLE_DEBUG 1
+#include <stdio.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -1081,6 +1084,9 @@ typedef enum {
  */
 static inline uint32_t lora_time_on_air(size_t pkt_len, loramac_dr_idx_t dr, uint8_t cr)
 {
+    if(ENABLE_DEBUG)
+        printf("[lora_time_on_air] assert");
+
     assert(dr <= LORAMAC_DR_6);
     const uint8_t _K[6][4] = {
         { 0, 1, 5, 5 }, /* DR0 */

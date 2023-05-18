@@ -14,8 +14,8 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
-WIFI_SSID ?= "iPhone di Simone"
-WIFI_PASS ?= "pq1ow2ie3ur4yt5"
+WIFI_SSID ?= "Pixel-Simone"
+WIFI_PASS ?= "abcdef123"
 
 # Optionally include remoteDNS support. This includes resolution of names at an
 # upstream DNS server and the handling of RDNSS options in Router Advertisements

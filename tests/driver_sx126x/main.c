@@ -35,6 +35,8 @@
 #include "sx126x_params.h"
 #include "sx126x_netdev.h"
 
+#include "xtimer.h"
+
 #define SX126X_MSG_QUEUE        (8U)
 #define SX126X_STACKSIZE        (THREAD_STACKSIZE_DEFAULT)
 #define SX126X_MSG_TYPE_ISR     (0x3456)
@@ -320,6 +322,8 @@ static const shell_command_t shell_commands[] = {
 
 int main(void)
 {
+    xtimer_sleep(3);
+
     sx126x_setup(&sx126x, &sx126x_params[0], 0);
     netdev_t *netdev = &sx126x.netdev;
 

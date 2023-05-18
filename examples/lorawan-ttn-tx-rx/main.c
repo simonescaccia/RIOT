@@ -1,10 +1,7 @@
-#include <stdio.h>
+#include "net/loramac.h"     /* core loramac definitions */
+#include "semtech_loramac.h" /* package API */
+
 #include <string.h>
-
-#include "xtimer.h"
-
-#include "net/loramac.h"
-#include "semtech_loramac.h"
 
 semtech_loramac_t loramac;  /* The loramac stack device descriptor */
 
@@ -21,28 +18,20 @@ static const uint8_t appkey[LORAMAC_APPKEY_LEN] = { 0x27, 0x2E, 0x77, 0x9C, \
 
 int main(void)
 {
-    xtimer_sleep(3);
-
-    puts("LoRaWAN Hello World\n");
-
     /* 1. initialize the LoRaMAC MAC layer */
     semtech_loramac_init(&loramac);
-
-    puts("Init done\n");
  
     /* 2. set the keys identifying the device */
     semtech_loramac_set_deveui(&loramac, deveui);
     semtech_loramac_set_appeui(&loramac, appeui);
     semtech_loramac_set_appkey(&loramac, appkey);
  
-    puts("Set keys done\n");
-
     /* 3. join the network */
     if (semtech_loramac_join(&loramac, LORAMAC_JOIN_OTAA) != SEMTECH_LORAMAC_JOIN_SUCCEEDED) {
         puts("Join procedure failed");
         return 1;
     }
-    puts("Join procedure succeeded\n");
+    puts("Join procedure succeeded");
  
     /* 4. send some data */
     char *message = "This is RIOT";
@@ -51,6 +40,5 @@ int main(void)
         printf("Cannot send message '%s'\n", message);
         return 1;
     }
-
-    return 0;
+ 
 }

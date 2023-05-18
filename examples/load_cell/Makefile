@@ -1,8 +1,8 @@
 # name of your application
-APPLICATION = lorawan-ttn
+APPLICATION = load-cell
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= b-l072z-lrwan1
+BOARD ?= native
 
 # This has to be the absolute path to the RIOT base directory:
 RIOTBASE ?= $(CURDIR)/../..
@@ -15,17 +15,6 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
-# Default region is Europe and default band is 868MHz
-LORA_REGION ?= EU868
-
-ACTIVATION_MODE ?= otaa
-DEVEUI ?= 70B3D57ED005D1E7
-APPEUI ?= 0000000000000000
-APPKEY ?= 272E779C396D1E51E94B9BDD39558EB0
-
-# Include the Semtech-loramac package
-USEPKG += semtech-loramac
 USEMODULE += xtimer
-USEMODULE += sx1276  # for a SX1262 radio device
 
 include $(RIOTBASE)/Makefile.include

@@ -24,8 +24,6 @@ USEMODULE += shell
 USEMODULE += shell_cmds_default
 USEMODULE += fmt
 
-FEATURES_OPTIONAL += periph_eeprom
-
 # Default IotLab Config to run the test
 ifneq (,$(filter iotlab%,$(MAKECMDGOALS)))
   IOTLAB_NODES ?= 1

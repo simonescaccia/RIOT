@@ -9,6 +9,8 @@
 #include "periph/gpio.h"
 #include <stdint.h>
 
+#include "xtimer.h"
+
 uint8_t gpio_util_shiftin(gpio_t data_pin, gpio_t clock_pin)
 {
     uint8_t byte = 0x00;

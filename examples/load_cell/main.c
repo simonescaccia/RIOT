@@ -23,8 +23,8 @@
 
 #include "xtimer.h"
 
-gpio_t GPIO_SCK = GPIO_PIN(0, 1);
-gpio_t GPIO_DT = GPIO_PIN(0, 2);
+gpio_t GPIO_SCK = GPIO_PIN(0, 2);
+gpio_t GPIO_DT = GPIO_PIN(0, 1);
 
 #define ZERO_LOAD_CELL 8498
 

@@ -191,7 +191,7 @@ static int _cmd_con(int argc, char **argv)
 
 static int _cmd_pub(int argc, char **argv)
 {
-    enum QoS qos = QOS0;
+    enum QoS qos = QOS2;
 
     if (argc < 3) {
         printf("usage: %s <topic name> <string msg> [QoS level]\n",
